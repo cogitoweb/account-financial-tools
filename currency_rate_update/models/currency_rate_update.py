@@ -73,7 +73,7 @@ class CurrencyRateUpdateService(models.Model):
         return res
 
     def _selection_service(self, *a, **k):
-        res = [(x.code, x.name) for x in CurrencyGetterType.getters.values()]
+        res = [(x.code, x.name) for x in list(CurrencyGetterType.getters.values())]
         return res
 
     # List of webservicies the value sould be a class name

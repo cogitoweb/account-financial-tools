@@ -181,7 +181,7 @@ class CreditControlPolicy(models.Model):
         allowed = [x for x in policies
                    if account in x.account_ids or x.do_nothing]
         if self not in allowed:
-            allowed_names = u"\n".join(x.name for x in allowed)
+            allowed_names = "\n".join(x.name for x in allowed)
             raise UserError(
                 _('You can only use a policy set on '
                   'account %s.\n'

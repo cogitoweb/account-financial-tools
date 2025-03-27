@@ -102,7 +102,7 @@ class AccountMoveLine(models.Model):
             if aml.asset_id:
                 if set(vals).intersection(FIELDS_AFFECTS_ASSET_MOVE_LINE):
                     if not (self.env.context.get('allow_asset_removal') and
-                            vals.keys() == ['asset_id']):
+                            list(vals.keys()) == ['asset_id']):
                         raise UserError(
                             _("You cannot change an accounting item "
                               "linked to an asset depreciation line."))

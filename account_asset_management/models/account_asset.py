@@ -13,13 +13,14 @@ from odoo import api, fields, models, _
 import odoo.addons.decimal_precision as dp
 from odoo.exceptions import UserError
 from odoo.osv import expression
+from functools import reduce
 
 _logger = logging.getLogger(__name__)
 
 
 class DummyFy(object):
     def __init__(self, *args, **argv):
-        for key, arg in argv.items():
+        for key, arg in list(argv.items()):
             setattr(self, key, arg)
 
 
@@ -727,7 +728,7 @@ class AccountAsset(models.Model):
         """
         amount = entry.get('period_amount')
         if self.prorata and self.method_time == 'year':
-            dates = filter(lambda x: x <= entry['date_stop'], line_dates)
+            dates = [x for x in line_dates if x <= entry['date_stop']]
             full_periods = len(dates) - 1
             amount = entry['fy_amount'] - amount * full_periods
         return amount

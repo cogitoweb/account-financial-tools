@@ -54,7 +54,7 @@ class TestAssetManagement(common.TransactionCase):
         asset.refresh()
 
         # check values in the depreciation board
-        self.assertEquals(len(asset.depreciation_line_ids), 13)
+        self.assertEqual(len(asset.depreciation_line_ids), 13)
         self.assertAlmostEqual(asset.depreciation_line_ids[1].amount,
                                83.33, places=2)
         self.assertAlmostEqual(asset.depreciation_line_ids[-1].amount,
@@ -79,7 +79,7 @@ class TestAssetManagement(common.TransactionCase):
         asset.refresh()
 
         # check values in the depreciation board
-        self.assertEquals(len(asset.depreciation_line_ids), 7)
+        self.assertEqual(len(asset.depreciation_line_ids), 7)
         self.assertAlmostEqual(asset.depreciation_line_ids[1].amount,
                                166.67, places=2)
         self.assertAlmostEqual(asset.depreciation_line_ids[-1].amount,

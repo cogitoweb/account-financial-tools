@@ -3,9 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 try:
-    import cStringIO as StringIO
+    import io as StringIO
 except ImportError:
-    import StringIO
+    import io
 import base64
 import csv
 import time
@@ -93,10 +93,10 @@ class FixedAssetImport(models.TransientModel):
 
     def _remove_leading_lines(self, lines):
         """ remove leading blank or comment lines """
-        input = StringIO.StringIO(lines)
+        input = io.StringIO(lines)
         header = False
         while not header:
-            ln = input.next()
+            ln = next(input)
             if not ln or ln and ln[0] in [self.csv_separator, '#']:
                 continue
             else:
@@ -253,7 +253,7 @@ class FixedAssetImport(models.TransientModel):
             val = False
         elif val in ['1', 'True']:
             val = True
-        if isinstance(val, basestring):
+        if isinstance(val, str):
             msg = _(
                 "Incorrect value '%s' "
                 "for field '%s' of type Boolean !"
@@ -361,11 +361,11 @@ class FixedAssetImport(models.TransientModel):
         self._err_log = ''
         self._get_orm_fields()
         lines, header = self._remove_leading_lines(self.lines)
-        header_fields = csv.reader(
-            StringIO.StringIO(header), dialect=self.dialect).next()
+        header_fields = next(csv.reader(
+            io.StringIO(header), dialect=self.dialect))
         self._header_fields = self._process_header(header_fields)
         reader = csv.DictReader(
-            StringIO.StringIO(lines), fieldnames=self._header_fields,
+            io.StringIO(lines), fieldnames=self._header_fields,
             dialect=self.dialect)
 
         fa_vals_list = []

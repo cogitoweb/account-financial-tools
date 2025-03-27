@@ -103,30 +103,30 @@ class TestAssetManagement(common.TransactionCase):
         #
         ict0 = self.browse_ref('account_asset_management.'
                                'account_asset_asset_ict0')
-        self.assertEquals(ict0.state, 'draft')
-        self.assertEquals(ict0.purchase_value, 1500)
-        self.assertEquals(ict0.salvage_value, 0)
-        self.assertEquals(ict0.depreciation_base, 1500)
-        self.assertEquals(len(ict0.depreciation_line_ids), 1)
+        self.assertEqual(ict0.state, 'draft')
+        self.assertEqual(ict0.purchase_value, 1500)
+        self.assertEqual(ict0.salvage_value, 0)
+        self.assertEqual(ict0.depreciation_base, 1500)
+        self.assertEqual(len(ict0.depreciation_line_ids), 1)
         vehicle0 = self.browse_ref('account_asset_management.'
                                    'account_asset_asset_vehicle0')
-        self.assertEquals(vehicle0.state, 'draft')
-        self.assertEquals(vehicle0.purchase_value, 12000)
-        self.assertEquals(vehicle0.salvage_value, 2000)
-        self.assertEquals(vehicle0.depreciation_base, 10000)
-        self.assertEquals(len(vehicle0.depreciation_line_ids), 1)
+        self.assertEqual(vehicle0.state, 'draft')
+        self.assertEqual(vehicle0.purchase_value, 12000)
+        self.assertEqual(vehicle0.salvage_value, 2000)
+        self.assertEqual(vehicle0.depreciation_base, 10000)
+        self.assertEqual(len(vehicle0.depreciation_line_ids), 1)
 
         #
         # I compute the depreciation boards
         #
         ict0.compute_depreciation_board()
         ict0.refresh()
-        self.assertEquals(len(ict0.depreciation_line_ids), 4)
-        self.assertEquals(ict0.depreciation_line_ids[1].amount, 500)
+        self.assertEqual(len(ict0.depreciation_line_ids), 4)
+        self.assertEqual(ict0.depreciation_line_ids[1].amount, 500)
         vehicle0.compute_depreciation_board()
         vehicle0.refresh()
-        self.assertEquals(len(vehicle0.depreciation_line_ids), 6)
-        self.assertEquals(vehicle0.depreciation_line_ids[1].amount, 2000)
+        self.assertEqual(len(vehicle0.depreciation_line_ids), 6)
+        self.assertEqual(vehicle0.depreciation_line_ids[1].amount, 2000)
 
         #
         # I post the first depreciation line
@@ -134,15 +134,15 @@ class TestAssetManagement(common.TransactionCase):
         ict0.validate()
         ict0.depreciation_line_ids[1].create_move()
         ict0.refresh()
-        self.assertEquals(ict0.state, 'open')
-        self.assertEquals(ict0.value_depreciated, 500)
-        self.assertEquals(ict0.value_residual, 1000)
+        self.assertEqual(ict0.state, 'open')
+        self.assertEqual(ict0.value_depreciated, 500)
+        self.assertEqual(ict0.value_residual, 1000)
         vehicle0.validate()
         vehicle0.depreciation_line_ids[1].create_move()
         vehicle0.refresh()
-        self.assertEquals(vehicle0.state, 'open')
-        self.assertEquals(vehicle0.value_depreciated, 2000)
-        self.assertEquals(vehicle0.value_residual, 8000)
+        self.assertEqual(vehicle0.state, 'open')
+        self.assertEqual(vehicle0.value_depreciated, 2000)
+        self.assertEqual(vehicle0.value_residual, 8000)
 
     def test_02_prorata_basic(self):
         """Prorata temporis depreciation basic test."""
@@ -206,7 +206,7 @@ class TestAssetManagement(common.TransactionCase):
             'type': 'depreciate',
             'init_entry': True,
         })
-        self.assertEquals(len(asset.depreciation_line_ids), 2)
+        self.assertEqual(len(asset.depreciation_line_ids), 2)
         asset.compute_depreciation_board()
         asset.refresh()
         # I check the depreciated value is the initial value
@@ -252,7 +252,7 @@ class TestAssetManagement(common.TransactionCase):
             'type': 'depreciate',
             'init_entry': True,
         })
-        self.assertEquals(len(asset.depreciation_line_ids), 2)
+        self.assertEqual(len(asset.depreciation_line_ids), 2)
         asset.compute_depreciation_board()
         asset.refresh()
         # I check the depreciated value is the initial value
@@ -296,7 +296,7 @@ class TestAssetManagement(common.TransactionCase):
         asset.refresh()
 
         # check values in the depreciation board
-        self.assertEquals(len(asset.depreciation_line_ids), 5)
+        self.assertEqual(len(asset.depreciation_line_ids), 5)
         self.assertAlmostEqual(asset.depreciation_line_ids[1].amount,
                                400.00, places=2)
         self.assertAlmostEqual(asset.depreciation_line_ids[2].amount,
@@ -325,7 +325,7 @@ class TestAssetManagement(common.TransactionCase):
         asset.refresh()
 
         # check values in the depreciation board
-        self.assertEquals(len(asset.depreciation_line_ids), 15)
+        self.assertEqual(len(asset.depreciation_line_ids), 15)
         # lines prior to asset start period are grouped in the first entry
         self.assertAlmostEqual(asset.depreciation_line_ids[1].amount,
                                300.00, places=2)
@@ -356,7 +356,7 @@ class TestAssetManagement(common.TransactionCase):
         asset.refresh()
 
         # check values in the depreciation board
-        self.assertEquals(len(asset.depreciation_line_ids), 6)
+        self.assertEqual(len(asset.depreciation_line_ids), 6)
         self.assertAlmostEqual(asset.depreciation_line_ids[1].amount,
                                400.00, places=2)
         self.assertAlmostEqual(asset.depreciation_line_ids[2].amount,
@@ -387,7 +387,7 @@ class TestAssetManagement(common.TransactionCase):
         asset.refresh()
 
         # check values in the depreciation board
-        self.assertEquals(len(asset.depreciation_line_ids), 6)
+        self.assertEqual(len(asset.depreciation_line_ids), 6)
         self.assertAlmostEqual(asset.depreciation_line_ids[1].amount,
                                200.00, places=2)
         self.assertAlmostEqual(asset.depreciation_line_ids[-1].amount,
@@ -422,7 +422,7 @@ class TestAssetManagement(common.TransactionCase):
         })
         wiz.remove()
         asset.refresh()
-        self.assertEquals(len(asset.depreciation_line_ids), 3)
+        self.assertEqual(len(asset.depreciation_line_ids), 3)
         self.assertAlmostEqual(asset.depreciation_line_ids[1].amount,
                                81.46, places=2)
         self.assertAlmostEqual(asset.depreciation_line_ids[2].amount,

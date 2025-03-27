@@ -61,7 +61,7 @@ class TestMoveLineImporter(test_common.SingleTransactionCase):
         self.importer_model._load_data(
             cr, uid, importer.id, head, data, _do_commit=False, context={})
         importer = self.importer_model.browse(cr, uid, importer_id)
-        self.assertEquals(importer.state, 'done',
+        self.assertEqual(importer.state, 'done',
                           'Exception %s during import' % importer.report)
         created_move_ids = self.move_model.search(
             cr, uid,
@@ -98,7 +98,7 @@ class TestMoveLineImporter(test_common.SingleTransactionCase):
         self.importer_model._load_data(cr, uid, importer.id, head, data,
                                        _do_commit=False, context=context)
         importer = self.importer_model.browse(cr, uid, importer_id)
-        self.assertEquals(importer.state, 'done',
+        self.assertEqual(importer.state, 'done',
                           'Exception %s during import' % importer.report)
         created_move_ids = self.move_model.search(cr, uid,
                                                   [('ref', '=', 'test_2')])
@@ -130,7 +130,7 @@ class TestMoveLineImporter(test_common.SingleTransactionCase):
         self.importer_model._load_data(cr, uid, importer.id, head, data,
                                        _do_commit=False, context={})
         importer = self.importer_model.browse(cr, uid, importer_id)
-        self.assertEquals(importer.state, 'error',
+        self.assertEqual(importer.state, 'error',
                           'No exception %s during import' % importer.report)
         created_move_ids = self.move_model.search(cr, uid,
                                                   [('ref', '=', 'test_3')])

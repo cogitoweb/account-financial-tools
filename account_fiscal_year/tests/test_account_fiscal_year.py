@@ -22,10 +22,10 @@ class TestAccountFiscalYear(TransactionCase):
         """
         # check that the result  by default from 1/1 31/12
         result = self.company.compute_fiscalyear_dates(self.today_date)
-        self.assertEquals(
+        self.assertEqual(
             result['date_from'],
             datetime.date(self.today_date.year, 1, 1))
-        self.assertEquals(
+        self.assertEqual(
             result['date_to'],
             datetime.date(self.today_date.year, 12, 31))
         # create a fiscal year with different limits

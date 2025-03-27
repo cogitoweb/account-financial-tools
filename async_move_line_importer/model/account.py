@@ -26,7 +26,7 @@ _logger = logging.getLogger(__name__)
 
 
 def _format_inserts_values(vals):
-    cols = vals.keys()
+    cols = list(vals.keys())
     if 'line_id' in cols:
         cols.remove('line_id')
     return (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
@@ -86,7 +86,7 @@ class account_move(orm.Model):
         vals['state'] = 'draft'
         if not vals.get('name'):
             vals['name'] = "/"
-        sql = u"Insert INTO account_move (%s) VALUES (%s) RETURNING id"
+        sql = "Insert INTO account_move (%s) VALUES (%s) RETURNING id"
         sql = sql % _format_inserts_values(vals)
         try:
             cr.execute(sql, vals)
@@ -135,7 +135,7 @@ class account_move_line(orm.Model):
         :returns: created id
 
         """
-        sql = u"Insert INTO account_move_line (%s) VALUES (%s) RETURNING id"
+        sql = "Insert INTO account_move_line (%s) VALUES (%s) RETURNING id"
         sql = sql % _format_inserts_values(vals)
         try:
             cr.execute(sql, vals)

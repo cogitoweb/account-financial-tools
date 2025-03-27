@@ -60,7 +60,7 @@ def table_exists(cr, table):
 
 
 def rename_columns(cr, column_spec):
-    for table in column_spec.keys():
+    for table in list(column_spec.keys()):
         for (old, new, comment) in column_spec[table]:
             cr.execute(
                 "SELECT column_name "

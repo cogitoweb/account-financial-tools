@@ -283,7 +283,7 @@ class UpdateTaxConfig(orm.Model):
         # Map fiscal positions
         fp_tax_pool = self.pool.get('account.fiscal.position.tax')
         fp_tax_ids = fp_tax_pool.search(
-            cr, uid, [('tax_src_id', 'in', tax_map.keys())], context=context)
+            cr, uid, [('tax_src_id', 'in', list(tax_map.keys()))], context=context)
         fp_taxes = fp_tax_pool.browse(cr, uid, fp_tax_ids, context=context)
         for fp_tax in fp_taxes:
             new_fp_tax_id = fp_tax_pool.copy(
@@ -354,7 +354,7 @@ class UpdateTaxConfig(orm.Model):
                         val = pickle.loads(str(value.value))
                     except:
                         continue
-                    if isinstance(val, (int, long)) and val in tax_map:
+                    if isinstance(val, int) and val in tax_map:
                         write = True
                         new_val = tax_map[val]
                     elif isinstance(val, list) and val:
@@ -380,10 +380,10 @@ class UpdateTaxConfig(orm.Model):
         # 6.1: self.pool.models.items():
         for model_name, model in pool_models_items:
             if model:
-                for field_name, column in model._columns.items():
+                for field_name, column in list(model._columns.items()):
                     log += update_defaults(model_name, field_name, column)
                 for field_name, field_tuple in \
-                        model._inherit_fields.iteritems():
+                        model._inherit_fields.items():
                     if len(field_tuple) >= 3:
                         column = field_tuple[2]
                         log += update_defaults(model_name, field_name, column)
@@ -399,7 +399,7 @@ class UpdateTaxConfig(orm.Model):
                 ('product.template', 'taxes_id')]:
             pool = self.pool.get(model)
             obj_ids = pool.search(
-                cr, uid, [(field, 'in', tax_map.keys())],
+                cr, uid, [(field, 'in', list(tax_map.keys()))],
                 context=local_context)
             for obj in pool.read(
                     cr, uid, obj_ids, [field], context=context):

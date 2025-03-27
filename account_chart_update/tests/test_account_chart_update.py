@@ -436,9 +436,9 @@ class TestAccountChartUpdate(common.HttpCase):
         self.assertEqual(wizard.fiscal_position_ids.fiscal_position_id,
                          self.fp_template)
         # There is no XML-ID
-        self.assertFalse(self.tax.get_xml_id().values()[0])
-        self.assertFalse(self.account.get_xml_id().values()[0])
-        self.assertFalse(self.fp.get_xml_id().values()[0])
+        self.assertFalse(list(self.tax.get_xml_id().values())[0])
+        self.assertFalse(list(self.account.get_xml_id().values())[0])
+        self.assertFalse(list(self.fp.get_xml_id().values())[0])
         # Update for recreating XML-ID
         wizard.action_update_records()
         self.assertEqual(wizard.updated_taxes, 1)
@@ -448,9 +448,9 @@ class TestAccountChartUpdate(common.HttpCase):
         self.assertEqual(self.account.name, self.account_template.name)
         self.assertEqual(self.fp.note, self.fp_template.note)
         # There is XML-ID now
-        self.assertTrue(self.tax.get_xml_id().values()[0])
-        self.assertTrue(self.account.get_xml_id().values()[0])
-        self.assertTrue(self.fp.get_xml_id().values()[0])
+        self.assertTrue(list(self.tax.get_xml_id().values())[0])
+        self.assertTrue(list(self.account.get_xml_id().values())[0])
+        self.assertTrue(list(self.fp.get_xml_id().values())[0])
         wizard.unlink()
 
         # Test 2 recreate XML-ID
@@ -467,16 +467,16 @@ class TestAccountChartUpdate(common.HttpCase):
         self.assertEqual(wizard.fiscal_position_ids.fiscal_position_id,
                          self.fp_template)
         # There is no XML-ID
-        self.assertFalse(self.tax.get_xml_id().values()[0])
-        self.assertFalse(self.account.get_xml_id().values()[0])
-        self.assertFalse(self.fp.get_xml_id().values()[0])
+        self.assertFalse(list(self.tax.get_xml_id().values())[0])
+        self.assertFalse(list(self.account.get_xml_id().values())[0])
+        self.assertFalse(list(self.fp.get_xml_id().values())[0])
         # Update for recreating XML-ID
         wizard.action_update_records()
         self.assertEqual(wizard.updated_taxes, 1)
         self.assertEqual(wizard.updated_accounts, 1)
         self.assertEqual(wizard.updated_fps, 1)
         # There is XML-ID now
-        self.assertTrue(self.tax.get_xml_id().values()[0])
-        self.assertTrue(self.account.get_xml_id().values()[0])
-        self.assertTrue(self.fp.get_xml_id().values()[0])
+        self.assertTrue(list(self.tax.get_xml_id().values())[0])
+        self.assertTrue(list(self.account.get_xml_id().values())[0])
+        self.assertTrue(list(self.fp.get_xml_id().values())[0])
         wizard.unlink()

@@ -168,7 +168,7 @@ class move_line_importer(orm.Model):
                 _("Maybe you have not choose correct separator \n"
                   "the error detail is : \n %s") % repr(error)
             )
-        head = data.next()
+        head = next(data)
         head = [x.replace(' ', '') for x in head]
         # Generator does not work with orm.BaseModel.load
         values = [tuple(x) for x in data if x]

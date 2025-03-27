@@ -12,11 +12,11 @@
 from odoo import _, api, exceptions, fields, models, tools
 from odoo.tools import config
 from contextlib import closing
-from cStringIO import StringIO
+from io import StringIO
 import logging
 
 _logger = logging.getLogger(__name__)
-EXCEPTION_TEXT = u"Traceback (most recent call last)"
+EXCEPTION_TEXT = "Traceback (most recent call last)"
 
 
 class WizardUpdateChartsAccounts(models.TransientModel):
@@ -176,7 +176,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
             vals.append((0, False, {'sequence': seq, 'matching_value': opt}))
 
         all_options = self.env[model_name]._get_matching_selection()
-        all_options = map(lambda x: x[0], all_options)
+        all_options = [x[0] for x in all_options]
         all_options = list(set(all_options) - set(ordered_opts))
 
         for seq, opt in enumerate(all_options, len(ordered_opts) + 1):
@@ -353,7 +353,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
         return self._reopen()
 
     def _get_real_xml_name(self, template):
-        [external_id] = template.get_external_id().values()
+        [external_id] = list(template.get_external_id().values())
         (name, module) = external_id.split('.')
         return "%s.%d_%s" % (name, self.company_id.id, module)
 
@@ -415,7 +415,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
                 codes = templates.mapped("code")
                 if not codes:
                     continue
-                criteria = ('code', 'in', map(self.padded_code, codes))
+                criteria = ('code', 'in', list(map(self.padded_code, codes)))
             else:
                 field_name = matching.matching_value
                 field_values = templates.mapped(field_name)
@@ -562,7 +562,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
             to_include = self.account_field_ids.mapped('name')
         elif template._name == 'account.fiscal.position.template':
             to_include = self.fp_field_ids.mapped('name')
-        for key, field in template._fields.iteritems():
+        for key, field in template._fields.items():
             if key in ignore or key not in to_include:
                 continue
             expected = t = None
@@ -626,7 +626,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
         result = list()
         different_fields = sorted(
             template._fields[f].get_description(self.env)["string"]
-            for f in self.diff_fields(template, real).keys())
+            for f in list(self.diff_fields(template, real).keys()))
         if different_fields:
             result.append(
                 _("Differences in these fields: %s.") %
@@ -802,7 +802,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
                 _logger.info(_("Created tax %s."), "'%s'" % template.name)
             # Update tax
             else:
-                for key, value in self.diff_fields(template, tax).iteritems():
+                for key, value in self.diff_fields(template, tax).items():
                     # We defer update because account might not be created yet
                     if key in {'account_id', 'refund_account_id'}:
                         continue
@@ -854,8 +854,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
                 # Update the account
                 try:
                     with self.env.cr.savepoint():
-                        for key, value in (self.diff_fields(template, account)
-                                           .iteritems()):
+                        for key, value in (iter(self.diff_fields(template, account).items())):
                             account[key] = value
                             _logger.info(
                                 _("Updated account %s."),
@@ -893,7 +892,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
             template = wiz_tax.tax_id
             tax = wiz_tax.update_tax_id
             done = False
-            for key, value in self.diff_fields(template, tax).iteritems():
+            for key, value in self.diff_fields(template, tax).items():
                 if key in {'account_id', 'refund_account_id'}:
                     tax[key] = value
                     done = True
@@ -945,7 +944,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
                     "'%s'" % template.name,
                 )
             else:
-                for key, value in self.diff_fields(template, fp).iteritems():
+                for key, value in self.diff_fields(template, fp).items():
                     fp[key] = value
                     _logger.info(_("Updated fiscal position %s."),
                                  "'%s'" % template.name)

@@ -58,7 +58,7 @@ class SelectTaxes(orm.TransientModel):
         taxes = []
         for tax in list(set(map(get_root_node, wiz.tax_ids))):
             taxes += add_tree(tax)
-        for tax in filter(lambda x: x.id not in covered, taxes):
+        for tax in [x for x in taxes if x.id not in covered]:
             line_pool.create(
                 cr, uid,
                 {'%s_config_id' % wiz.type_tax_use: wiz.config_id.id,
