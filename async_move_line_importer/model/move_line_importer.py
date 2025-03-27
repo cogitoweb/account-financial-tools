@@ -28,9 +28,9 @@ import tempfile
 
 import psycopg2
 
-import openerp.pooler as pooler
-from openerp.osv import orm, fields
-from openerp.tools.translate import _
+import odoo.pooler as pooler
+from odoo.osv import orm, fields
+from odoo.tools.translate import _
 
 
 _logger = logging.getLogger(__name__)

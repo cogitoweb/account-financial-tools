@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
+from odoo.osv import orm
 
 
 class account_tax(orm.Model):

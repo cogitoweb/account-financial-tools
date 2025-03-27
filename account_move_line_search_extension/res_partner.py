@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-from openerp import models
+from odoo import models
 
 
 class res_partner(models.Model):

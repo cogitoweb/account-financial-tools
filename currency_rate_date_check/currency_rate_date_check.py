@@ -20,8 +20,8 @@
 #
 ##############################################################################
 
-from openerp import models, fields, _
-from openerp.exceptions import Warning
+from odoo import models, fields, _
+from odoo.exceptions import Warning
 
 # Here are some explainations about the design of this module.
 # In odoo/openerp/addons/base/res/res_currency.py :

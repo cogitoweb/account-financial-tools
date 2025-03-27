@@ -20,8 +20,8 @@
 ##############################################################################
 import time
 
-import openerp.tests.common as test_common
-from openerp import addons
+import odoo.tests.common as test_common
+from odoo import addons
 
 
 class TestMoveLineImporter(test_common.SingleTransactionCase):

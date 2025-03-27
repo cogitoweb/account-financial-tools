@@ -27,10 +27,10 @@
 #
 #
 
-import openerp.tests.common as common
+import odoo.tests.common as common
 from datetime import datetime
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
-from openerp import workflow, exceptions
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo import workflow, exceptions
 
 
 def create_simple_invoice(self):

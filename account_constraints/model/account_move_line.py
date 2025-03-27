@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import models, api, exceptions, _
+from odoo import models, api, exceptions, _
 
 
 class AccountMoveLine(models.Model):

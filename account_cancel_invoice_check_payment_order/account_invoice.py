@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp.tools.translate import _
-from openerp.osv import osv, orm
+from odoo.tools.translate import _
+from odoo.osv import osv, orm
 
 
 class account_invoice(orm.Model):

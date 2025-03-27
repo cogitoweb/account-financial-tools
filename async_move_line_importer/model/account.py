@@ -20,8 +20,8 @@
 ##############################################################################
 import psycopg2
 import logging
-from openerp.osv import orm
-from openerp.tools.float_utils import float_compare
+from odoo.osv import orm
+from odoo.tools.float_utils import float_compare
 _logger = logging.getLogger(__name__)
 
 

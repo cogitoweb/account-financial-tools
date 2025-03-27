@@ -20,8 +20,8 @@
 #
 ##############################################################################
 
-from openerp import models
-from openerp.tools.safe_eval import safe_eval
+from odoo import models
+from odoo.tools.safe_eval import safe_eval
 
 
 class ir_actions_act_window(models.Model):
