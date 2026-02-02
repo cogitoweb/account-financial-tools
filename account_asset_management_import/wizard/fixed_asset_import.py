@@ -56,7 +56,7 @@ class FixedAssetImport(models.TransientModel):
     @api.depends('fa_data')
     def _compute_lines(self):
         if self.fa_data:
-            lines = base64.decodestring(self.fa_data)
+            lines = base64.decodebytes(self.fa_data)
             # convert windows & mac line endings to unix style
             self.lines = lines.replace('\r\n', '\n').replace('\r', '\n')
 
